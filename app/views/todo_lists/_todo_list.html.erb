@@ -1,0 +1,23 @@
+<li class="list-group-item d-flex justify-content-between pb-2 pt-3"><a class="text-decoration-none" href=<%= todo_list_path(todo_list)%>>
+      <div>
+        <h5 class="m-0 text-dark text-start text-capitalize pb-1">
+          <b><%= todo_list.title %></b>
+          <% if todo_list.status =="Not Started" %>
+          <span class="badge rounded-pill bg-danger">
+          <%elsif todo_list.status =="In Progress" %>
+          <span class="badge rounded-pill bg-success">
+          <%else%>
+          <span class="badge rounded-pill bg-info">
+          <%end%>
+
+          <%= todo_list.status %></span>
+        </h5>
+        <p class="text-secondary m-0">  <%= todo_list.percentage(todo_list.done_items(todo_list),todo_list.todo_items.count)%>% Completed ( <%= todo_list.done_items(todo_list) %>/<%= todo_list.todo_items.count%> Todo Items )  </p>
+      </div>
+      </a>
+      <div>
+      <%= link_to "Delete",todo_list_path(todo_list),data:{turbo_method: :delete} ,class:"btn btn-danger btn-lg" %>
+      <%= link_to "Edit",edit_todo_list_path(todo_list),class:"btn btn-secondary btn-lg"%>
+        
+      </div>
+    </li>

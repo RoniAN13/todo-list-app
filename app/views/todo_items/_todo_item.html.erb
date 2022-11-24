@@ -1,0 +1,26 @@
+<%= turbo_frame_tag dom_id(todo_item) do %>
+<li class="list-group-item" >
+
+          <div class="d-flex justify-content-between">
+            <div>
+            <% if todo_item.status_flag == false %>
+            <span class="text-capitalize  fs-5 fw-bold">
+            <%else%>
+            <span class="text-success text-capitalize text-decoration-line-through fs-5 ">
+            <%end%>
+
+              <%= todo_item.task %>
+            </span>
+            </div>
+            <div>
+              <%= link_to "Delete", todo_list_todo_item_path(todo_item.todo_list,todo_item) , data:{turbo_method: :delete},class:"btn btn-danger" %>
+              <%if todo_item.status_flag == false %>
+              <%= link_to "Done",todo_list_todo_item_path(todo_item.todo_list,todo_item),data:{turbo_method: :patch},class:"btn btn-success" %>
+              <%else%>
+              <%= link_to "Redo",todo_list_todo_item_path(todo_item.todo_list,todo_item),data:{turbo_method: :patch},class:"btn btn-dark" %>
+                <%end%>
+              </div>
+          </div>
+          
+</li>
+<%end%>

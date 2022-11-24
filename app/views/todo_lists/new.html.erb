@@ -1,0 +1,30 @@
+
+
+    
+
+   
+ <div class="row ">
+  <div class="col">
+<div class="card text-center">
+      <h2 class="py-4">New Todo List</h2>
+
+<%= form_with(model: @todo_list,local:true,data:{turbo:false}) do |f| %>
+  <div class="field py-2">
+   <%= f.label :Title,class:"fs-5"%>
+    <%= f.text_field :title %>
+  </div>
+
+   
+
+  <div class="actions py-3">
+  <%= f.submit "Create Todo List",class:"btn btn-success btn-md" %>  
+  </div>
+  <%end%>
+
+  <div class="position-absolute top-0 start-0">
+  <%= link_to "Back",todo_lists_path,class:"btn btn-dark btn-lg" %>
+</div>
+
+</div>
+  </div>
+</div>

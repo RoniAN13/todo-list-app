@@ -1,0 +1,9 @@
+ <%= form_with(model: [@todo_list,@todo_list.todo_items.build],class:"new-todo-item",remote:true) do |f| %>
+
+    <div class="input-group mb-4">
+    <%= f.text_field :task, placeholder: "Add a new todo item",class:"form-control" %>
+      <div class="input-group-append">
+      <%= f.submit "Add", class: "btn btn-primary input-group-btn" %>
+      </div>
+    </div>
+<%end%>

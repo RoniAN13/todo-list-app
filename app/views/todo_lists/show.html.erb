@@ -1,0 +1,46 @@
+<div class="row ">
+<div class="col">
+<div class="card text-center">
+<div class="card-header d-flex justify-content-between">
+
+  <div class="py-1">
+    <h4 class="m-0 text-start text-capitalize">
+      <b><%= @todo_list.title %></b>
+      <% if @todo_list.status =="Not Started" %>
+      <span class="badge  bg-danger">
+      <%elsif @todo_list.status =="In Progress" %>
+      <span class="badge  bg-success">
+      <%else%>
+      <span class="badge  bg-info">
+      <%end%>
+      <%= @todo_list.status %></span>
+    </h4>
+    <p class="text-secondary m-0"> <%= @todo_list.percentage(@todo_list.done_items(@todo_list),@todo_list.todo_items.count)%>% Completed ( <%= @todo_list.done_items(@todo_list) %>/<%= @todo_list.todo_items.count%> Todo Items ) </p>
+  </div>
+  <div class="py-1">
+    <a class="btn btn-secondary btn-lg" href="/todo_lists">Back to List Menu</a>
+  </div>
+</div>
+<div class="card-body">
+  <div class="progress mb-3">
+    <div class="progress-bar" role="progressbar" style="width:<%= @todo_list.percentage(@todo_list.done_items(@todo_list),@todo_list.todo_items.count)%>%" aria-valuenow=<%= @todo_list.percentage(@todo_list.done_items(@todo_list),@todo_list.todo_items.count)%> aria-valuemin="0" aria-valuemax="100"></div>
+  </div>
+
+  <%= render "todo_items/todo_item_form" %>
+  <ul class="list-group">
+  
+
+  <% if @todo_items %>
+  <%= turbo_stream_from @todo_list %>
+  
+    <div id="todo_items">
+  <%= render @todo_items %> 
+  </div> 
+  
+   
+  <%end%>
+  </ul>
+</div>
+</div>
+</div>
+</div>

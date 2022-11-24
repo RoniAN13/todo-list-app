@@ -1,0 +1,23 @@
+
+<div class="row ">
+  <div class="col">
+<div class="card text-center">
+      <div class="card-header d-flex justify-content-between py-4">
+  <h1 class="m-0 text-dark"> Todo Lists</h1>
+  <a class="btn btn-primary btn-lg my-auto" href="/todo_lists/new">New Todo List</a>
+</div>
+
+
+<div class="card-body">
+<ul class="list-group">
+
+<% if @todo_lists %>
+<div id="todo_lists" >
+<%= render @todo_lists %>
+</div>
+<%end%>
+</ul>
+</div>
+</div>
+  </div>
+</div>
