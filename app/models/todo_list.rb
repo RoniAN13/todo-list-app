@@ -2,8 +2,6 @@ class TodoList < ApplicationRecord
   belongs_to :user
   validates :title,presence:true
   has_many :todo_items,dependent: :destroy
-  after_create_commit { broadcast_append_to "todo_lists" }
-  after_update_commit { broadcast_replace_to self }
   
   def done_items(list)
     if list.todo_items.where(status_flag:true)

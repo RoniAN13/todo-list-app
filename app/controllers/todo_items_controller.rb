@@ -1,15 +1,17 @@
 class TodoItemsController < ApplicationController
     before_action :set_todo_list
-    after_action :update_todo_list
+    
     
     def create
         
         @todo_item = current_user.todo_items.new(todo_item_params)
-       
+      
         if @todo_item.save
-            flash[:notice]="Task Created Successfully"
+                update_todo_list
+                render turbo_stream: turbo_stream.update(@todo_list, partial: "todo_lists/todo_list_info",locals:{todo_list:@todo_list}) 
+        
         else
-            render 'todo_lists/show' 
+            render turbo_stream: turbo_stream.replace(@todo_item, partial: "todo_items/form",locals:{todo_list:@todo_list}) 
         end  
        
     end
@@ -22,13 +24,14 @@ class TodoItemsController < ApplicationController
         else
             @todo_item.update(status_flag: false)
         end
-          
+        update_todo_list
+        render turbo_stream: turbo_stream.update(@todo_list, partial: "todo_lists/todo_list_info",locals:{todo_list:@todo_list}) 
     end    
     def destroy
         @todo_item = @todo_list.todo_items.find(params[:id])
         @todo_item.destroy
-        
-       
+        update_todo_list
+        render turbo_stream: turbo_stream.update(@todo_list, partial: "todo_lists/todo_list_info",locals:{todo_list:@todo_list}) 
     end    
   private 
     def todo_item_params
@@ -39,9 +42,10 @@ class TodoItemsController < ApplicationController
     end
     def update_todo_list
         @todo_items = @todo_list.todo_items.all
+        @todo_list.update(status:"Not Started") if @todo_items.count == 0
         if @todo_items.count!=0 && @todo_list.done_items(@todo_list) == @todo_items.count  
             @todo_list.update(status:"Completed")
-        elsif @todo_list.done_items(@todo_list) <= @todo_items.count
+        elsif @todo_list.done_items(@todo_list) < @todo_items.count
             unless @todo_list.done_items(@todo_list) ==0
                 @todo_list.update(status:"In Progress")
             else 
